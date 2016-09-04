@@ -36,7 +36,6 @@ class CondaInstaller(object):
         self.arch = arch
         self.home = home
         self.log = self.home + ".log"
-        self.exe = join(self.home, "Scripts", "conda.exe")
         self.filename = self.conda_file.format(major=self.version[0],
                 arch="_64" if self.arch == "64" else "")
         self.path = join(getcwd(), self.filename)
@@ -87,20 +86,20 @@ class CondaInstaller(object):
 
     def configure(self):
         self.logger.info("Configuring %s...", self.home)
-        cmd = [self.exe, "config", "--set", "always_yes", "yes", "--set",
+        cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
             "changeps1", "no"]
         check_call(cmd)
         self.logger.info("Done.")
 
     def update(self):
         self.logger.info("Updating %s", self.home)
-        cmd = [self.exe, "update", "-q", "conda"]
+        cmd = ["conda", "update", "-q", "conda"]
         check_call(cmd)
         self.logger.info("Done.")
 
     def create(self, *args):
         self.logger.info("Creating environment '%s'...", self.venv)
-        cmd = [self.exe, "create", "-q", "-n", self.venv, "python", self.version] + args
+        cmd = ["conda", "create", "-q", "-n", self.venv, "python", self.version] + args
         check_call(cmd)
         cmd = ["activate", self.venv]
         check_call(cmd)
