@@ -1,3 +1,9 @@
+# -*- encoding: utf-8 -*-
+
+
+from __future__ import absolute_import
+
+
 """
 AppVeyor will at least have few Pythons around so there's no point of implementing a bootstrapper in PowerShell.
 
@@ -6,10 +12,9 @@ with various fixes and improvements that just weren't feasible to implement in P
 """
 
 
-from __future__ import absolute_import
-
 import logging
 import io
+
 from os import (environ, getcwd)
 from os.path import (exists, join)
 from subprocess import check_call
@@ -108,10 +113,12 @@ class CondaInstaller(object):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     with CondaInstaller(environ['PYTHON_VERSION'], environ['PYTHON_ARCH'],
             environ['PYTHON']) as conda:
         conda.download()
         conda.install()
         conda.configure()
         conda.update()
-        conda.packages(environ['PACKAGES'])
+        conda.create(environ['DEPS'])
+    logging.shutdown()

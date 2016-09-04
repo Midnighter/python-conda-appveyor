@@ -3,8 +3,7 @@ shallow_clone: true # download the zip instead of the whole history
 environment:
 
     global:
-        PACKAGES:
-            - "numpy=1.10"
+        DEPS: "numpy=1.10 Cython"
         # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
         # /E:ON and /V:ON options are not enabled in the batch script intepreter
         # See: http://stackoverflow.com/a/13751649/163740
