@@ -14,22 +14,22 @@ environment:
         - PYTHON_VERSION: "2.7"
           PYTHON_ARCH: "32"
           platform: x86
-          PYTHON: "C:\\Python27_32"
+          PYTHON: "C:\\Miniconda2"
 
         - PYTHON_VERSION: "2.7"
           PYTHON_ARCH: "64"
           platform: x64
-          PYTHON: "C:\\Python27_64"
+          PYTHON: "C:\\Miniconda2"
 
         - PYTHON_VERSION: "3.4"
           PYTHON_ARCH: "32"
           platform: x86
-          PYTHON: "C:\\Python34_32"
+          PYTHON: "C:\\Miniconda3"
 
         - PYTHON_VERSION: "3.4"
           PYTHON_ARCH: "64"
           platform: x64
-          PYTHON: "C:\\Python34_64"
+          PYTHON: "C:\\Miniconda3"
 
 install:
     # this installs the appropriate Miniconda (Py2/Py3, 32/64 bit)
