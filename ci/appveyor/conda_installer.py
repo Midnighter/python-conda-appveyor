@@ -61,6 +61,9 @@ class CondaInstaller(object):
                 self.logger.info("Downloaded {:,}/{:,} ...".format(progress[1], total))
 
         self.logger.info("Downloading '%s'...", self.filename)
+#        if exists(self.filename):
+#            self.logger.info("already exists, skipping.")
+#            return
         for _ in range(max_tries):
             progress = [0, 0]
             try:
@@ -77,9 +80,9 @@ class CondaInstaller(object):
     def install(self):
         self.logger.info("Installing Miniconda using Python %s %s-bit to '%s'...",
                 self.version, self.arch, self.home)
-        if exists(self.home):
-            self.logger.info("already exists, skipping.")
-            return
+#        if exists(self.home):
+#            self.logger.info("already exists, skipping.")
+#            return
 
         cmd = [self.path, "/S", "/D", self.home]
         msg = check_output(cmd, shell=True) # may fail and trigger __exit__
@@ -88,7 +91,7 @@ class CondaInstaller(object):
 
     def configure(self):
         self.logger.info("Configuring '%s'...", self.home)
-        cmd = ["SET", "PATH", "%PYTHON%;%PYTHON%\\Scripts;%PATH%"]
+        cmd = r"SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%"
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
