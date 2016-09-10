@@ -17,7 +17,7 @@ import io
 
 from os import (environ, getcwd)
 from os.path import (exists, join)
-from subprocess import check_call
+from subprocess import check_output
 try:
     from urllib.request import urlretrieve
     from urllib.parse import urljoin
@@ -82,35 +82,43 @@ class CondaInstaller(object):
             return
 
         cmd = [self.path, "/S", "/D", self.home]
-        check_call(cmd) # may fail and trigger __exit__
+        msg = check_output(cmd, shell=True) # may fail and trigger __exit__
+        self.logger.debug(msg)
         self.logger.info("Done.")
 
     def configure(self):
         self.logger.info("Configuring '%s'...", self.home)
         cmd = ["SET", "PATH", "%PYTHON%;%PYTHON%\\Scripts;%PATH%"]
-        check_call(cmd)
+        msg = check_output(cmd, shell=True)
+        self.logger.debug(msg)
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
             "changeps1", "no"]
-        check_call(cmd)
+        msg = check_output(cmd, shell=True)
+        self.logger.debug(msg)
         self.logger.info("Done.")
 
     def update(self):
         self.logger.info("Updating '%s'...", self.home)
         cmd = ["conda", "update", "-q", "conda"]
-        check_call(cmd)
+        msg = check_output(cmd, shell=True)
+        self.logger.debug(msg)
         self.logger.info("Done.")
 
     def create(self, *args):
         self.logger.info("Creating environment '%s'...", self.venv)
         cmd = ["conda", "create", "-q", "-n", self.venv, "python", self.version] + args
-        check_call(cmd)
+        msg = check_output(cmd, shell=True)
+        self.logger.debug(msg)
         cmd = ["activate", self.venv]
-        check_call(cmd)
+        msg = check_output(cmd, shell=True)
+        self.logger.debug(msg)
         # consider only for debugging
         cmd = ["conda", "info", "-a"]
-        check_call(cmd)
+        msg = check_output(cmd, shell=True)
+        self.logger.debug(msg)
         cmd = ["conda", "list"]
-        check_call(cmd)
+        msg = check_output(cmd, shell=True)
+        self.logger.debug(msg)
         self.logger.info("Done.")
 
 
