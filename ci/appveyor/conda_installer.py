@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 
 from __future__ import absolute_import
@@ -31,6 +31,7 @@ class CondaInstaller(object):
     conda_file = "Miniconda{major}-latest-Windows-x86{arch}.exe"
 
     def __init__(self, version, arch, home, **kw_args):
+        super(CondaInstaller, self).__init__(**kw_args)
         self.logger = logging.getLogger("{}.{}".format(__name__, self.__class__.__name__))
         self.version = version
         self.arch = arch
@@ -85,14 +86,16 @@ class CondaInstaller(object):
         self.logger.info("Done.")
 
     def configure(self):
-        self.logger.info("Configuring %s...", self.home)
+        self.logger.info("Configuring '%s'...", self.home)
+        cmd = ["SET", "PATH", "%PYTHON%;%PYTHON%\\Scripts;%PATH%"]
+        check_call(cmd)
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
             "changeps1", "no"]
         check_call(cmd)
         self.logger.info("Done.")
 
     def update(self):
-        self.logger.info("Updating %s", self.home)
+        self.logger.info("Updating '%s'...", self.home)
         cmd = ["conda", "update", "-q", "conda"]
         check_call(cmd)
         self.logger.info("Done.")
