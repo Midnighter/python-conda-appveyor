@@ -120,8 +120,9 @@ class CondaInstaller(object):
         self.logger.info("Done.")
 
     def create(self, *args):
-        self.logger.info("Creating environment '%s'...", self.venv)
+        self.logger.info("Creating environment '%s'...", self.venv )
         cmd = ["conda", "create", "-q", "-n", self.venv, "python", self.version] + list(args)
+        self.logger.info(cmd)
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
         cmd = ["activate", self.venv]

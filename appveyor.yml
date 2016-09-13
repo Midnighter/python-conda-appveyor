@@ -29,7 +29,7 @@ environment:
         - PYTHON_VERSION: "3.4"
           PYTHON_ARCH: "64"
           platform: x64
-          PYTHON_LOCs: "C:\\Miniconda3"
+          PYTHON_LOC: "C:\\Miniconda3"
 
 install:
     # this installs the appropriate Miniconda (Py2/Py3, 32/64 bit)
