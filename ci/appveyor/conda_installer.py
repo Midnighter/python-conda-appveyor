@@ -102,7 +102,7 @@ class CondaInstaller(object):
         self.logger.debug(msg)
         self.logger.debug(check_output("SET", shell=True))
         self.logger.debug(check_output("dir "+self.home, shell=True))
-         self.logger.debug(check_output("dir "+self.home+"\\Scripts", shell=True))
+        self.logger.debug(check_output("dir "+self.home+"\\Scripts", shell=True))
        
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
             "changeps1", "no"]
