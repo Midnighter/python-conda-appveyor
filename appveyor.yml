@@ -33,9 +33,10 @@ environment:
 
 install:
     # this installs the appropriate Miniconda (Py2/Py3, 32/64 bit)
+    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     - python --version
     - python -u ci\appveyor\conda_installer.py
-    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  
 
 build: false
 
