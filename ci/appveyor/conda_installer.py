@@ -95,10 +95,14 @@ class CondaInstaller(object):
         self.logger.debug(cmd)
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
+        self.logger.debug(check_output("SET", shell=True))
+        
         cmd = r'''SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%'''
         self.logger.debug(cmd)
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
+        self.logger.debug(check_output("SET", shell=True))
+        
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
             "changeps1", "no"]
         msg = check_output(cmd, shell=True)
