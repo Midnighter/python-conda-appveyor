@@ -96,7 +96,7 @@ class CondaInstaller(object):
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
         
-        cmd = "SET PATH=\%PYTHON%;\%PYTHON\%\\Scripts;\%PATH\%"
+        cmd = "SET PATH="+self.home+";"+self.home+"\\Scripts;"
         self.logger.debug(cmd)
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
