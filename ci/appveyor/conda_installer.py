@@ -84,7 +84,7 @@ class CondaInstaller(object):
 #            self.logger.info("already exists, skipping.")
 #            return
 
-        cmd = [self.path, "/S", "/D", self.home]
+        cmd = [self.path, "/S", "/D","/RegisterPython=1", self.home]
         msg = check_output(cmd, shell=True) # may fail and trigger __exit__
         self.logger.debug(msg)
         self.logger.info("Done Installing.")
@@ -101,7 +101,9 @@ class CondaInstaller(object):
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
         self.logger.debug(check_output("SET", shell=True))
-        
+        self.logger.debug(check_output("dir "+self.home, shell=True))
+         self.logger.debug(check_output("dir "+self.home+"\\Scripts", shell=True))
+       
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
             "changeps1", "no"]
         msg = check_output(cmd, shell=True)
