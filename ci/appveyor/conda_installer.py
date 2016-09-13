@@ -103,7 +103,7 @@ class CondaInstaller(object):
         self.logger.debug(check_output("SET", shell=True))
         import os
         self.logger.debug( "C:\\")
-       self.logger.debug(  os.listdir(self.home))
+        self.logger.debug(  os.listdir(self.home))
         self.logger.debug(  os.listdir(self.home+"\\Scripts"))
        
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
