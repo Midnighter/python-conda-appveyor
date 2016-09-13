@@ -100,7 +100,6 @@ class CondaInstaller(object):
         self.logger.debug(cmd)
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
-        self.logger.debug(check_output("SET", shell=True))
         import os
         self.logger.debug( os.listdir( "C:\\"))
         self.logger.debug(  os.listdir(self.home))
@@ -121,7 +120,7 @@ class CondaInstaller(object):
 
     def create(self, *args):
         self.logger.info("Creating environment '%s'...", self.venv )
-        cmd = ["conda", "create", "-q", "-n", self.venv, "python"+ self.version] + args[0].split(" ")
+        cmd = ["conda", "create", "-q", "-n", self.venv, "python="+ self.version] + args[0].split(" ")
         self.logger.info(cmd)
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
