@@ -91,7 +91,8 @@ class CondaInstaller(object):
 
     def configure(self):
         self.logger.info("Configuring '%s'...", self.home)
-        cmd = r'''SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%'''
+        cmd = r'''SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%'''
+        self.logger.debug(cmd)
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
