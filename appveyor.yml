@@ -4,40 +4,47 @@ environment:
 
     global:
         DEPS: "numpy=1.10 Cython"
+        CONDA_VENV: "testy"
         # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
         # /E:ON and /V:ON options are not enabled in the batch script intepreter
         # See: http://stackoverflow.com/a/13751649/163740
         CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\ci\\appveyor\\windows_sdk.cmd"
-        TEST_CMD: "python -c 'import numpy as np;print(np.version.version)'"
+        TEST_CMD: 'python -c "import numpy as np;print(np.version.version)"'
 
     matrix:
         - PYTHON_VERSION: "2.7"
           PYTHON_ARCH: "32"
           platform: x86
-          PYTHON: "C:\\Miniconda2"
+          CONDA_HOME: "C:\\Miniconda"
 
         - PYTHON_VERSION: "2.7"
           PYTHON_ARCH: "64"
           platform: x64
-          PYTHON: "C:\\Miniconda2"
+          CONDA_HOME: "C:\\Miniconda"
 
         - PYTHON_VERSION: "3.4"
           PYTHON_ARCH: "32"
           platform: x86
-          PYTHON: "C:\\Miniconda3"
+          CONDA_HOME: "C:\\Miniconda3"
 
         - PYTHON_VERSION: "3.4"
           PYTHON_ARCH: "64"
           platform: x64
-          PYTHON: "C:\\Miniconda3"
+          CONDA_HOME: "C:\\Miniconda3"
 
 install:
-    # this installs the appropriate Miniconda (Py2/Py3, 32/64 bit)
-    - python --version
-    - python -u ci\appveyor\conda_installer.py
-    - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    - python -c "import sys; print(sys.version); print(sys.executable)"
+    - "SET PATH=%CONDA_HOME%;%CONDA_HOME%\\Scripts;%PATH%"
+    - python -c "import sys; print(sys.version); print(sys.executable)"
+    # configures the Miniconda environment (Py2/Py3, 32/64 bit)
+    - python -u ci\appveyor\conda_setup.py
+    - python -c "import sys; print(sys.version); print(sys.executable)"
 
 build: false
 
 test_script:
+    - python -c "import os; print(os.environ['CONDA_VENV'])"
+    - "activate %CONDA_VENV%"
+    - python -c "import sys; print(sys.version); print(sys.executable)"
+    - conda info --envs
     - "%CMD_IN_ENV% %TEST_CMD%"

@@ -8,6 +8,11 @@ Inspired by [python-appveyor-demo](https://github.com/ogrisel/python-appveyor-de
 
 This can be used together with its twin [python-conda-travis](https://github.com/Midnighter/python-conda-travis) to have complete testing on Linux, Mac OS, and Windows using miniconda.
 
+## Contributors
+
+* Moritz E. Beber
+* Christoph Fretter
+
 ## License
 
 Uses a BSD 3-clause license, please also see the included full [LICENSE](LICENSE) file.
