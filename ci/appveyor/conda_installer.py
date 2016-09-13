@@ -84,7 +84,7 @@ class CondaInstaller(object):
 #            self.logger.info("already exists, skipping.")
 #            return
 
-        cmd = [self.path, "/S", "/D","/RegisterPython=1", self.home]
+        cmd = [self.path, "/S", "/RegisterPython=1","/D", self.home]
         msg = check_output(cmd, shell=True) # may fail and trigger __exit__
         self.logger.debug(msg)
         self.logger.info("Done Installing.")
