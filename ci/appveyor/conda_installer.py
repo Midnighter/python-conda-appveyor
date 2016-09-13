@@ -102,7 +102,8 @@ class CondaInstaller(object):
         self.logger.debug(msg)
         self.logger.debug(check_output("SET", shell=True))
         import os
-        self.logger.debug(  os.listdir(self.home))
+        self.logger.debug( "C:\\")
+       self.logger.debug(  os.listdir(self.home))
         self.logger.debug(  os.listdir(self.home+"\\Scripts"))
        
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
@@ -139,7 +140,7 @@ class CondaInstaller(object):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     with CondaInstaller(environ['PYTHON_VERSION'], environ['PYTHON_ARCH'],
-            environ['PYTHON']) as conda:
+            environ['PYTHON_LOC']) as conda:
         conda.download()
         conda.install()
         conda.configure()
