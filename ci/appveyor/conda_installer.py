@@ -102,7 +102,7 @@ class CondaInstaller(object):
         self.logger.debug(msg)
         self.logger.debug(check_output("SET", shell=True))
         import os
-        self.logger.debug( "C:\\")
+        self.logger.debug( os.listdir( "C:\\"))
         self.logger.debug(  os.listdir(self.home))
         self.logger.debug(  os.listdir(self.home+"\\Scripts"))
        
