@@ -121,7 +121,7 @@ class CondaInstaller(object):
 
     def create(self, *args):
         self.logger.info("Creating environment '%s'...", self.venv)
-        cmd = ["conda", "create", "-q", "-n", self.venv, "python", self.version] + args
+        cmd = ["conda", "create", "-q", "-n", self.venv, "python", self.version] + list(args)
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
         cmd = ["activate", self.venv]
@@ -141,8 +141,8 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     with CondaInstaller(environ['PYTHON_VERSION'], environ['PYTHON_ARCH'],
             environ['PYTHON_LOC']) as conda:
-        conda.download()
-        conda.install()
+      #  conda.download()
+      #  conda.install()
         conda.configure()
         conda.update()
         conda.create(environ['DEPS'])
