@@ -87,18 +87,18 @@ class CondaInstaller(object):
         cmd = [self.path, "/S", "/D", self.home]
         msg = check_output(cmd, shell=True) # may fail and trigger __exit__
         self.logger.debug(msg)
-        self.logger.info("Done.")
+        self.logger.info("Done Installing.")
 
     def configure(self):
         self.logger.info("Configuring '%s'...", self.home)
-        cmd = r"SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%"
+        cmd = r'''SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%'''
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
             "changeps1", "no"]
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
-        self.logger.info("Done.")
+        self.logger.info("Done configuring.")
 
     def update(self):
         self.logger.info("Updating '%s'...", self.home)
