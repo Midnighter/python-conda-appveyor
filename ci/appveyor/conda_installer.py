@@ -52,53 +52,21 @@ class CondaInstaller(object):
                 self.logger.debug(fh.read())
         return False # False reraises the exception
 
-    def download(self, max_tries=3):
-
-        def report(count, size, total):
-            progress[0] = count * size
-            if progress[0] - progress[1] > 1000000:
-                progress[1] = progress[0]
-                self.logger.info("Downloaded {:,}/{:,} ...".format(progress[1], total))
-
-        self.logger.info("Downloading '%s'...", self.filename)
-#        if exists(self.filename):
-#            self.logger.info("already exists, skipping.")
-#            return
-        for _ in range(max_tries):
-            progress = [0, 0]
-            try:
-                urlretrieve(self.url, self.path, reporthook=report)
-                break
-            except Exception as exc:
-                self.logger.error("Failed to download: %s", str(exc))
-            self.logger.info("Retrying ...")
-        if not exists(self.path):
-            # triggers __exit__
-            raise IOError("downloading '{}' failed".format(self.url))
-        self.logger.info("Done.")
-
-    def install(self):
-        self.logger.info("Installing Miniconda using Python %s %s-bit to '%s'...",
-                self.version, self.arch, self.home)
-#        if exists(self.home):
-#            self.logger.info("already exists, skipping.")
-#            return
-
-        cmd = [self.path, "/S", "/D", self.home]
-        msg = check_output(cmd, shell=True) # may fail and trigger __exit__
-        self.logger.debug(msg)
-        self.logger.info("Done.")
-
     def configure(self):
         self.logger.info("Configuring '%s'...", self.home)
-        cmd = r"SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%"
+        cmd = r"SET PYTHON="+self.home
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
+        cmd = "SET PATH="+self.home+";"+self.home+"\\Scripts;"
+        msg = check_output(cmd, shell=True)
+        self.logger.debug(msg)
+        #import os
+        #self.logger.debug( os.listdir( "C:\\"))
         cmd = ["conda", "config", "--set", "always_yes", "yes", "--set",
             "changeps1", "no"]
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
-        self.logger.info("Done.")
+        self.logger.info("Done configuring.")
 
     def update(self):
         self.logger.info("Updating '%s'...", self.home)
@@ -109,7 +77,8 @@ class CondaInstaller(object):
 
     def create(self, *args):
         self.logger.info("Creating environment '%s'...", self.venv)
-        cmd = ["conda", "create", "-q", "-n", self.venv, "python", self.version] + args
+        cmd = ["conda", "create", "-q", "-n", self.venv, "python="+ self.version] + args[0].split(" ")
+        self.logger.info(cmd)
         msg = check_output(cmd, shell=True)
         self.logger.debug(msg)
         cmd = ["activate", self.venv]
@@ -129,8 +98,6 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     with CondaInstaller(environ['PYTHON_VERSION'], environ['PYTHON_ARCH'],
             environ['PYTHON']) as conda:
-        conda.download()
-        conda.install()
         conda.configure()
         conda.update()
         conda.create(environ['DEPS'])
