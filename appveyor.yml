@@ -14,26 +14,26 @@ environment:
         - PYTHON_VERSION: "2.7"
           PYTHON_ARCH: "32"
           platform: x86
-          PYTHON_LOC: "C:\\Miniconda"
+          PYTHON: "C:\\Miniconda"
 
         - PYTHON_VERSION: "2.7"
           PYTHON_ARCH: "64"
           platform: x64
-          PYTHON_LOC: "C:\\Miniconda"
+          PYTHON: "C:\\Miniconda"
 
         - PYTHON_VERSION: "3.4"
           PYTHON_ARCH: "32"
           platform: x86
-          PYTHON_LOC: "C:\\Miniconda3"
+          PYTHON: "C:\\Miniconda3"
 
         - PYTHON_VERSION: "3.4"
           PYTHON_ARCH: "64"
           platform: x64
-          PYTHON_LOC: "C:\\Miniconda3"
+          PYTHON: "C:\\Miniconda3"
 
 install:
     # this installs the appropriate Miniconda (Py2/Py3, 32/64 bit)
-    - "SET PATH=%PYTHON_LOC%;%PYTHON_LOC%\\Scripts;%PATH%"
+    - "SET PATH=%PYTHON_LOC%;%PYTHON%\\Scripts;%PATH%"
     - python --version
     - python -u ci\appveyor\conda_installer.py
   
