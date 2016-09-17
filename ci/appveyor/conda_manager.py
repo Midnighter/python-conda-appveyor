@@ -69,7 +69,6 @@ class CondaManager(object):
     def create(self, *args):
         self.logger.info("Creating environment '%s'...", self.venv)
         cmd = ["conda", "create", "-q", "-n", self.venv, "python="+ self.version] + list(args)
-        self.logger.info(cmd)
         msg = check_output(cmd, shell=True)
         self.logger.debug(decode(msg))
         cmd = ["activate", self.venv]

@@ -33,18 +33,12 @@ environment:
           CONDA_HOME: "C:\\Miniconda3"
 
 install:
-    - python -c "import sys; print(sys.version); print(sys.executable)"
     - "SET PATH=%CONDA_HOME%;%CONDA_HOME%\\Scripts;%PATH%"
-    - python -c "import sys; print(sys.version); print(sys.executable)"
     # configures the Miniconda environment (Py2/Py3, 32/64 bit)
     - python -u ci\appveyor\conda_setup.py
-    - python -c "import sys; print(sys.version); print(sys.executable)"
 
 build: false
 
 test_script:
-    - python -c "import os; print(os.environ['CONDA_VENV'])"
     - "activate %CONDA_VENV%"
-    - python -c "import sys; print(sys.version); print(sys.executable)"
-    - conda info --envs
     - "%CMD_IN_ENV% %TEST_CMD%"

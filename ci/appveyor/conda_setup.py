@@ -11,7 +11,7 @@ from conda_manager import CondaManager
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     with CondaManager(environ['PYTHON_VERSION'], environ['PYTHON_ARCH'],
             environ['CONDA_HOME'], environ['CONDA_VENV']) as conda:
         conda.configure()
